@@ -1,0 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --lightmode: #fff;
+    --darkmodebutton: #00000066;
+    --lightShadow: #FFFFFFBF;
+    --gray-100: #697565;
+    --gray-200: #3C3D37;
+    --gray-300: #1E201E;
+    --gray-400: #121212;
+}
+
+body{
+    transition: all 300ms ease-in-out;
+}
+
+.dark-mode-body{
+    transition: all 700ms ease-out;
+    background-color: var(--gray-400);
+    color: var(--lightmode);
+}
+
+.mode{
+    height: 40px;
+    width: 80px;
+    background-color: var(--lightmode);
+    border-radius: 20px;
+    box-shadow: inset 0px 4px 4px var(--darkmodebutton);
+}
+
+.mode-dark{
+    height: 40px;
+    width: 80px;
+    background-color: var(--gray-200);
+    border-radius: 20px;
+    transition: all 700ms ease-out;
+    box-shadow: inset 0px 4px 4px var(--gray-400);
+}
+
+.light{
+    height: 40px;
+    width: 40px;
+    border: 0px;
+    background-color: var(--lightmode);
+    border-radius: 50%;
+    box-shadow: 4px 0px 4px var(--darkmodebutton);
+    background-image: url(./assest/svgs/Sun_Icon.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    transition-property: all;
+    transition-duration: 700ms;
+    transition-timing-function: ease-out;
+}
+
+.dark-mode{
+    transform: translateX(calc(80px - 40px));
+    box-shadow: -4px 0px 4px var(--gray-400);
+    background-image: url(./assest/svgs/Moon_Icon.svg);
+    background-position: 50% 70%;
+    background-color: var(--gray-200);
+}
+ 
+.btn-round-dark{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    border: 0px;
+    background-color: var(--gray-200);
+    box-shadow: 0px 0px 4px var(--gray-300);
+    transition: all 50ms ease-in-out;
+}
+
+.btn-round-dark:active{
+    box-shadow: inset 0px 0px 4px var(--gray-300);
+    transform: scale(0.9);
+}
+
+.btn-dark:active{
+    background-color: transparent;
+    color: red;
+    border: 2px solid red;
+    transform: scale(0.9);
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./dark mode.css">
+    <title>Hand Washed</title>
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <img src="./assest/svgs/logo.svg" alt="">
+            </div>
+            <div class="mode">
+                <button type="button" class="light"></button>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="image">
+             <img src="./assest/images/image.jpg" alt="" height="300">
+        </div>
+        <div class="count">
+            <p class="number"></p>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn-round" id="add">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M10 0C8.89543 0 8 0.895431 8 2V7C8 7.55228 7.55228 8 7 8H2C0.895431 8 0 8.89543 0 10C0 11.1046 0.895431 12 2 12H7C7.55228 12 8 12.4477 8 13V18C8 19.1046 8.89543 20 10 20C11.1046 20 12 19.1046 12 18V13C12 12.4477 12.4477 12 13 12H18C19.1046 12 20 11.1046 20 10C20 8.89543 19.1046 8 18 8H13C12.4477 8 12 7.55228 12 7V2C12 0.895431 11.1046 0 10 0Z"
+                        fill="black" />
+                </svg>
+            </button>
+            <button type="button" class="btn-round" id="minus">
+                <svg width="20" height="4" viewBox="0 0 20 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect y="4" width="4" height="20" rx="2" transform="rotate(-90 0 4)" fill="black" />
+                </svg>
+            </button>
+        </div>
+        <!-- <div class="old-count">
+            <div class="yesterday">
+                <p>Yesterday:</p>
+                <p></p>
+            </div> -->
+            <div class="highest">
+                <p>Highest:</p>
+                <p id="highest-number"></p>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn" id="clear">Clear All</button>
+        </div>
+
+    </main>
+    <script src="./index.js" defer></script>
+    <script src="./dark mode.js" defer></script>
+</body>
+
+</html>
