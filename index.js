@@ -2,59 +2,126 @@ const addButton = document.querySelector("#add");
 const minusButton = document.querySelector("#minus");
 const count = document.querySelector(".number");
 const hightestNumber = document.querySelector("#highest-number");
+const yesterdayNumber = document.querySelector("#yesterday-number");
 const clearButton = document.querySelector("#clear")
 
-let number = parseInt(localStorage.getItem("number")) ? parseInt(localStorage.getItem("number")) : 0;
-count.innerHTML = number;
+
+// This variable is used only to pass as parameter in countTraker function contructor and initalize todayCount
+let todayCountNumber = (localStorage.getItem("number") != undefined) ? JSON.parse(localStorage.getItem("number")) : new countTracker(0);
+
+let todayCount = new countTracker(todayCountNumber.number, todayCountNumber.date);
+
+count.innerHTML = todayCount.number;
 
 let highest = parseInt(localStorage.getItem("highest")) ? parseInt(localStorage.getItem("highest")) : 0;
 hightestNumber.innerHTML = highest;
 
+// Yesterday count updater
+
+onload = () =>{
+    updateYesterdayCount();
+};
+
+function updateYesterdayCount(){
+if(dateCompare()){
+    yesterdayNumber.innerHTML = todayCount.number;
+    todayCount.number = 0;
+    todayCount.date = new Date();
+    saveNumber("number", JSON.stringify(todayCount));
+    count.innerHTML = todayCount.number;
+} else{
+    yesterdayNumber.innerHTML = 0;
+}
+}
+
+// Event Listen to add to the count
 addButton.addEventListener("click", addCount);
+
+// Event Listen to minus to the count
 minusButton.addEventListener("click", minusCount);
+
+// Event Listen to clear localStorage and remain values 
 clearButton.addEventListener("click", () => {
     localStorage.clear();
-    number = 0;
+    todayCount.number = 0;
     highest = 0;
-    count.innerHTML = number;
+    count.innerHTML = todayCount.number;
     hightestNumber.innerHTML = highest;
 });
 
-
+// Function to add to the count
+// This fuction will be called by addButton Event Listner
 function addCount() {
-    number++;
-    count.innerHTML = number;
-    saveNumber("number", number);
+    todayCount.number++;
+    count.innerHTML = todayCount.number;
+    saveNumber("number", JSON.stringify(todayCount)); // Adds the value to local storage
+
+    // If true it updated the highest 
     if (isHighest()) {
-        highest = number;
+        highest = todayCount.number;
         hightestNumber.innerHTML = highest;
-        saveNumber("highest", number);
+        saveNumber("highest", highest);
     }
 }
 
+// Function to minus to the count
+// This fuction will be called by minusButton Event Listner
 function minusCount() {
-    number--;
-    if (number < 0) {
+    todayCount.number--;
+    if (todayCount.number < 0) {
         alert("Count Cannot be negative.");
-        number = 0;
+        todayCount.number = 0;
         return;
     }
-    count.innerHTML = number;
-    saveNumber("number", number);
+    count.innerHTML = todayCount.number;
+    saveNumber("number", JSON.stringify(todayCount)); // Adds the value to local storage
 }
 
 function isHighest() {
-    if (number > highest) {
+    if (todayCount.number > highest) {
         return true;
     }
     return false;
 }
 
+
+// This fuction runs when page is loaded and update count
+function dateCompare(){
+    let today = new Date();
+    if(today.getDate() > todayCount.date.getDate()){
+        return true;
+    }
+    else if(today.getMonth() > todayCount.date.getMonth()){
+        return true;
+    }
+    else if(today.getFullYear() > todayCount.date.getFullYear()){
+        return true;
+    }
+    else{
+        false;
+    }
+}
+
 // Local Storage function
 /**
 @param {string} - Key for localStorage
-@param {number} - value for localStorage
+@param {object} - value for localStorage
 */
 function saveNumber(key, num) {
     localStorage.setItem(key, num)
+}
+
+// Number Tracker Contructor Function
+/**
+@param {number} - Number
+@param {date} - Date 
+@returns {object} - Count Traker Object
+*/
+function countTracker(number, date){
+    this.number = number;
+    if(date === undefined){
+        this.date = new Date();
+    } else{
+        this.date = new Date(date);
+    }
 }
