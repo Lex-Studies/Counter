@@ -16,22 +16,27 @@ count.innerHTML = todayCount.number;
 let highest = parseInt(localStorage.getItem("highest")) ? parseInt(localStorage.getItem("highest")) : 0;
 hightestNumber.innerHTML = highest;
 
+let yesterdayCount = (localStorage.getItem("yesterday") != undefined) ? JSON.parse(localStorage.getItem("yesterday")) : 0;
+
 // Yesterday count updater
 
-onload = () =>{
+onload = () => {
     updateYesterdayCount();
 };
 
-function updateYesterdayCount(){
-if(dateCompare()){
-    yesterdayNumber.innerHTML = todayCount.number;
-    todayCount.number = 0;
-    todayCount.date = new Date();
-    saveNumber("number", JSON.stringify(todayCount));
-    count.innerHTML = todayCount.number;
-} else{
-    yesterdayNumber.innerHTML = 0;
-}
+function updateYesterdayCount() {
+    if (dateCompare()) {
+        saveNumber("yesterday", todayCount.number);
+        yesterdayNumber.innerHTML = JSON.parse(localStorage.getItem("yesterday"));
+        todayCount.number = 0;
+        todayCount.date = new Date();
+        saveNumber("number", JSON.stringify(todayCount));
+        count.innerHTML = todayCount.number;
+    } else if (isToday()) {
+        yesterdayNumber.innerHTML = yesterdayCount;
+    } else {
+        yesterdayNumber.innerHTML = 0;
+    }
 }
 
 // Event Listen to add to the count
@@ -86,19 +91,30 @@ function isHighest() {
 
 
 // This fuction runs when page is loaded and update count
-function dateCompare(){
+function dateCompare() {
     let today = new Date();
-    if(today.getDate() > todayCount.date.getDate()){
+    if (today.getDate() > todayCount.date.getDate()) {
         return true;
     }
-    else if(today.getMonth() > todayCount.date.getMonth()){
+    else if (today.getMonth() > todayCount.date.getMonth()) {
         return true;
     }
-    else if(today.getFullYear() > todayCount.date.getFullYear()){
+    else if (today.getFullYear() > todayCount.date.getFullYear()) {
         return true;
     }
-    else{
+    else {
         false;
+    }
+}
+
+// This function compare if the date is the same
+function isToday() {
+    let today = new Date();
+    if (today.getDate() === todayCount.date.getDate()) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
@@ -117,11 +133,11 @@ function saveNumber(key, num) {
 @param {date} - Date 
 @returns {object} - Count Traker Object
 */
-function countTracker(number, date){
+function countTracker(number, date) {
     this.number = number;
-    if(date === undefined){
+    if (date === undefined) {
         this.date = new Date();
-    } else{
+    } else {
         this.date = new Date(date);
     }
 }
